@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Affan (@ctflearner) | Offensive Security Engineer & Researcher</title>
+  
+  <!-- Inter & JetBrains Mono Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            slate: {
+              850: '#151d2c',
+              900: '#0f172a',
+              950: '#090e17',
+            },
+            accent: {
+              DEFAULT: '#059669',
+              light: '#10b981',
+              subtle: '#064e3b',
+              glow: 'rgba(16, 185, 129, 0.15)',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Clean, unobtrusive scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090e17;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+
+    /* Print styling for resume export & PDF download */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+      }
+      .no-print, header, footer, #cvDownloadModal, #toast {
+        display: none !important;
+      }
+      .print-border {
+        border-color: #cbd5e1 !important;
+      }
+      .print-card {
+        background: #f8fafc !important;
+        color: #0f172a !important;
+        box-shadow: none !important;
+        border: 1px solid #e2e8f0 !important;
+        page-break-inside: avoid;
+      }
+      a {
+        text-decoration: underline !important;
+        color: #0f172a !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-300 font-sans antialiased selection:bg-emerald-500/20 selection:text-emerald-300 min-h-screen">
+
+  <!-- TOP EXECUTIVE NAVBAR -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-slate-950/90 border-b border-slate-800/80 no-print">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      
+      <!-- Brand / Identity -->
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-md bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-mono font-bold text-sm">
+          A
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span class="font-semibold text-slate-100 tracking-tight text-base">Affan</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-400">
+        <a href="#summary" class="hover:text-slate-100 transition-colors">Summary</a>
+        <a href="#achievements" class="hover:text-slate-100 transition-colors">Achievements</a>
+        <a href="#experience" class="hover:text-slate-100 transition-colors">Experience</a>
+        <a href="#certifications" class="hover:text-slate-100 transition-colors">Certifications</a>
+        <a href="#opensource" class="hover:text-slate-100 transition-colors">Open Source</a>
+        <a href="#contact" class="hover:text-slate-100 transition-colors">Contact</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2.5">
+        <!-- Download / Print CV Button -->
+        <button onclick="openCvModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-slate-900 border border-slate-700/80 text-slate-200 hover:bg-slate-800 transition">
+          <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span>Download CV</span>
+        </button>
+
+        <a href="#contact" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition">
+          <i data-lucide="send" class="w-3.5 h-3.5"></i>
+          <span>Contact</span>
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobileNavBtn" aria-label="Toggle Navigation" class="md:hidden p-1.5 rounded-md bg-slate-900 border border-slate-800 text-slate-400">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileNav" class="hidden md:hidden border-b border-slate-800 bg-slate-900/95 px-5 py-4 space-y-2.5 text-sm font-medium">
+      <a href="#summary" class="block text-slate-300 hover:text-white">Summary</a>
+      <a href="#achievements" class="block text-slate-300 hover:text-white">Achievements (CVEs &amp; Research)</a>
+      <a href="#experience" class="block text-slate-300 hover:text-white">Experience</a>
+      <a href="#certifications" class="block text-slate-300 hover:text-white">Certifications</a>
+      <a href="#opensource" class="block text-slate-300 hover:text-white">Open Source &amp; Community</a>
+      <a href="#contact" class="block text-slate-300 hover:text-white">Contact &amp; Socials</a>
+      <div class="pt-2 border-t border-slate-800 flex items-center justify-start">
+        <button onclick="openCvModal()" class="py-1 text-xs text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i> Download CV / PDF
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN RESUME / PORTFOLIO CONTAINER -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-14">
+
+    <!-- RESUME HEADER / EXECUTIVE HERO -->
+    <section id="summary" class="bg-slate-900/80 border border-slate-800 rounded-xl p-6 sm:p-8 relative">
+      <div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
+        
+        <div class="space-y-3 max-w-3xl">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Affan</h1>
+            <span class="text-sm font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/25">
+              @ctflearner
+            </span>
+            <span class="inline-flex items-center gap-1 text-xs text-slate-400 border border-slate-700/80 rounded-full px-2.5 py-0.5 bg-slate-950">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Available for Engagements
+            </span>
+          </div>
+
+          <p class="text-lg text-emerald-400 font-medium">
+            Offensive Security Researcher &amp; Application Security Engineer (Close to 3 Years Experience)
+          </p>
+
+          <p class="text-sm text-slate-300 leading-relaxed pt-1">
+            Offensive security specialist with <strong>close to 3 years of professional experience</strong> conducting Gray and Black-box Web, API, and Android application penetration testing and exploit development. Credited with <strong>16+ officially assigned CVEs</strong> across web and mobile platforms, published author on <strong>Exploit-DB (ID #11358)</strong>, and government-acknowledged researcher by <strong>NCIIPC (Govt. of India)</strong>. Proven track record in auditing high-scale enterprise platforms for <strong>Fortune 500 SaaS and Fintech clients</strong> and delivering 40+ institutional and government audits under CERT-In standards.
+          </p>
+
+          <!-- Contact & Social Strip in Summary -->
+          <div class="flex flex-wrap items-center gap-y-2 gap-x-4 pt-3 text-xs font-mono text-slate-400 border-t border-slate-800/80">
+            <span class="flex items-center gap-1.5 text-slate-300">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-400"></i> Kolkata, West Bengal, India
+            </span>
+            <span class="flex items-center gap-1.5 text-slate-300">
+              <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-emerald-400"></i> B.Tech (CIEM) – 8.94 CGPA
+            </span>
+            
+            <!-- LinkedIn link in Summary -->
+            <a id="summaryLinkedInLink" href="https://www.linkedin.com/in/affan-ahmed-70a406178/" target="_blank" rel="noopener noreferrer" 
+               class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#0a66c2]/10 border border-[#0a66c2]/30 text-[#70b5f9] hover:bg-[#0a66c2]/20 hover:text-white transition font-semibold">
+              <i data-lucide="linkedin" class="w-3.5 h-3.5 text-[#0a66c2]"></i>
+              <span>LinkedIn Profile</span>
+            </a>
+
+            <a id="summaryEmailLink" href="mailto:affanahmed3104@gmail.com" class="flex items-center gap-1.5 text-slate-300 hover:text-emerald-400 transition">
+              <i data-lucide="mail" class="w-3.5 h-3.5 text-emerald-400"></i> <span id="summaryEmailText">affanahmed3104@gmail.com</span>
+            </a>
+
+            <a href="https://github.com/ctflearner" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-slate-300 hover:text-emerald-400 transition">
+              <i data-lucide="github" class="w-3.5 h-3.5 text-emerald-400"></i> github.com/ctflearner
+            </a>
+
+            <!-- Quick Download CV Button inside Summary -->
+            <button onclick="openCvModal()" class="no-print flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 transition">
+              <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
+              <span>Download CV (PDF)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Numerical Highlights -->
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-2.5 shrink-0 text-center font-mono">
+          <div class="bg-slate-950 border border-slate-800 rounded-lg p-3">
+            <div id="cveStatCount" class="text-2xl font-bold text-emerald-400">16</div>
+            <div class="text-[11px] text-slate-400">Assigned CVEs</div>
+          </div>
+          <div class="bg-slate-950 border border-slate-800 rounded-lg p-3">
+            <div class="text-2xl font-bold text-slate-100">40+</div>
+            <div class="text-[11px] text-slate-400">Govt/Inst. Audits</div>
+          </div>
+          <div class="bg-slate-950 border border-slate-800 rounded-lg p-3">
+            <div class="text-2xl font-bold text-amber-400">#11358</div>
+            <div class="text-[11px] text-slate-400">Exploit-DB ID</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 1: MASTER ACHIEVEMENTS & CONTRIBUTIONS -->
+    <section id="achievements" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-800 pb-3">
+        <div>
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">Track Record &amp; Discoveries</div>
+          <h2 class="text-2xl font-bold text-white tracking-tight">Achievements &amp; Security Contributions</h2>
+        </div>
+        <p class="text-xs text-slate-400 max-w-md">
+          Consolidated repository of vulnerability research, accredited CVE disclosures, Exploit-DB submissions, and government acknowledgments.
+        </p>
+      </div>
+
+      <!-- Segment 1A: CVE Disclosures Repository -->
+      <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-5 space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <i data-lucide="shield-alert" class="w-4 h-4 text-emerald-400"></i>
+            <h3 class="text-base font-semibold text-white">Assigned Common Vulnerabilities &amp; Exposures (CVEs)</h3>
+            <span id="cveBadgeTotal" class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/25">16 Total</span>
+          </div>
+
+          <!-- Controls: Filter, Search -->
+          <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+            <div class="flex items-center bg-slate-950 rounded-lg border border-slate-800 p-0.5">
+              <button onclick="setCVEFilter('all')" id="cve-tab-all" class="cve-filter-btn px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 font-medium">All (<span id="cveCountAll">16</span>)</button>
+              <button onclick="setCVEFilter('web')" id="cve-tab-web" class="cve-filter-btn px-2.5 py-1 rounded text-slate-400 hover:text-white">Web (<span id="cveCountWeb">10</span>)</button>
+              <button onclick="setCVEFilter('android')" id="cve-tab-android" class="cve-filter-btn px-2.5 py-1 rounded text-slate-400 hover:text-white">Android (<span id="cveCountAndroid">6</span>)</button>
+            </div>
+
+            <div class="relative w-40 sm:w-44">
+              <input id="cveFilterInput" type="text" placeholder="Search ID / gist..." oninput="filterCVEList()" 
+                     class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-7 pr-2.5 py-1 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-500 absolute left-2 top-2"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- CVE Grid List with Severity & Gists -->
+        <div id="cveDisplayGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-1">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Segment 1B: CWE Focus, Exploit-DB, GHDB, Hall of Fame, Nuclei -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        
+        <!-- CWEs & Research -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Vulnerability Taxonomy</span>
+              <i data-lucide="cpu" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <h4 class="text-base font-bold text-white">CWE Vulnerability Focus</h4>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+              Demonstrated identification, exploitation vectors, and mitigation strategies across standard weakness classes:
+            </p>
+            <div class="mt-3 flex flex-wrap gap-1.5 font-mono text-xs">
+              <a href="https://cwe.mitre.org/data/definitions/918.html" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-emerald-400 hover:border-emerald-500/40 transition">
+                CWE-918 (SSRF) ↗
+              </a>
+              <a href="https://cwe.mitre.org/data/definitions/22.html" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-emerald-400 hover:border-emerald-500/40 transition">
+                CWE-22 (Path Traversal) ↗
+              </a>
+              <a href="https://cwe.mitre.org/data/definitions/1284.html" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-emerald-400 hover:border-emerald-500/40 transition">
+                CWE-1284 (Improper Validation) ↗
+              </a>
+              <a href="https://cwe.mitre.org/data/definitions/798.html" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-emerald-400 hover:border-emerald-500/40 transition">
+                CWE-798 (Hardcoded Credentials) ↗
+              </a>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 text-[11px] font-mono text-amber-300/90 flex items-center gap-1.5">
+            <i data-lucide="clock" class="w-3.5 h-3.5 shrink-0"></i>
+            <span>In-Progress Research: CWE-117, CWE-112</span>
+          </div>
+        </div>
+
+        <!-- Exploit-DB & GHDB -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">OffSec Author #11358</span>
+              <i data-lucide="terminal" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <h4 class="text-base font-bold text-white">Exploits &amp; GHDB Dorks</h4>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+              Officially published exploits and accepted Google Hacking Database (GHDB) queries on OffSec's Exploit Database repository.
+            </p>
+            <div class="mt-3 space-y-1.5 text-xs font-mono">
+              <div>
+                <a href="https://www.exploit-db.com/?author=11358" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 flex items-center justify-between p-1.5 rounded bg-slate-950 border border-slate-800/90 transition">
+                  <span>Exploit-DB Author Profile</span>
+                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+              <div>
+                <a href="https://www.exploit-db.com/google-hacking-database?author=11358" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 flex items-center justify-between p-1.5 rounded bg-slate-950 border border-slate-800/90 transition">
+                  <span>Google Dorks (GHDB Entries)</span>
+                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 text-[11px] font-mono text-slate-400">
+            Verified OffSec Exploit-DB Researcher
+          </div>
+        </div>
+
+        <!-- Hall of Fame & Government Recognition -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-mono text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/20">Recognition</span>
+              <i data-lucide="award" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <h4 class="text-base font-bold text-white">Hall of Fame &amp; Disclosures</h4>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+              Acknowledged by government bodies and enterprise software vendors for high-impact responsible vulnerability reporting.
+            </p>
+            <div class="mt-3 space-y-1.5 text-xs font-mono">
+              <a href="https://www.nciipc.gov.in/documents/NCIIPC_Newsletter_Oct23.pdf" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 flex items-center justify-between p-1.5 rounded bg-slate-950 border border-slate-800/90 transition">
+                <span>NCIIPC (Govt. of India) Newsletter</span>
+                <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+              </a>
+              <a href="https://www.inflectra.com/Company/Responsible-Disclosure.aspx" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 flex items-center justify-between p-1.5 rounded bg-slate-950 border border-slate-800/90 transition">
+                <span>Inflectra Hall of Fame</span>
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              </a>
+              <a href="https://github.com/projectdiscovery/nuclei-templates/commits?author=ctflearner" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 flex items-center justify-between p-1.5 rounded bg-slate-950 border border-slate-800/90 transition">
+                <span>Nuclei Vulnerability Templates</span>
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 text-[11px] font-mono text-slate-400">
+            Critical Infrastructure &amp; Tooling Contributions
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: PROFESSIONAL WORK EXPERIENCE (RESUME STRUCTURE) -->
+    <section id="experience" class="space-y-6">
+      <div class="border-b border-slate-800 pb-3">
+        <div class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">Career History</div>
+        <h2 class="text-2xl font-bold text-white tracking-tight">Professional Work Experience</h2>
+      </div>
+
+      <div class="space-y-6">
+        
+        <!-- Experience 1: we45 PVT LTD -->
+        <article class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 print-card space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 border-b border-slate-800/80 pb-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-lg font-bold text-white">Associate Security Engineer</h3>
+                <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Present Role</span>
+              </div>
+              <div class="text-sm font-semibold text-emerald-400 font-mono mt-0.5">we45 PVT LTD</div>
+            </div>
+            <div class="text-xs font-mono text-slate-400">
+              1st September 2025 – Present
+            </div>
+          </div>
+
+          <ul class="space-y-2 text-sm text-slate-300 leading-relaxed list-disc list-outside pl-4 marker:text-emerald-500">
+            <li>
+              <strong>Fortune 500 &amp; SaaS Platform Audits:</strong> Assessed core sub-modules and proprietary AI model integrations for enterprise SaaS platforms (e.g., Sprinklr); discovered 20+ Broken Access Control (BAC) vulnerabilities, Server-Side Request Forgery (SSRF), and critical injection flaws.
+            </li>
+            <li>
+              <strong>Fintech &amp; Banking Infrastructure:</strong> Led external network perimeter and API assessments for major financial institutions including Prudential and ADCB Bank, effectively identifying cross-tenant data visibility issues, input handling flaws, and privilege escalation vectors.
+            </li>
+            <li>
+              <strong>API &amp; Mobile Penetration Testing:</strong> Conducted comprehensive evaluations of internal REST APIs and Android clients (Movius, Seven-Up), isolating a critical rate-limiting absence in high-traffic endpoints that rendered client servers vulnerable to complete business interruption and severe financial overhead.
+            </li>
+            <li>
+              <strong>Web App Security &amp; Code Review:</strong> Performed gray-box assessments for multiple product release versions (Bluescape, Fintellix), reporting critical cross-site scripting (XSS), complex race conditions, and business logic flaws. Complimented dynamic testing with static analysis to catch trust boundary violations before production.
+            </li>
+            <li>
+              <strong>Remediation &amp; Technical Advisory:</strong> Authored standard pre-engagement documentation and engineered CERT-In compliant reporting templates. Managed remediation validation cycles with enterprise engineering teams to eliminate false positives and maintain a zero regression rate on validated fixes.
+            </li>
+          </ul>
+
+          <div class="flex flex-wrap gap-1.5 pt-2 font-mono text-xs text-slate-400">
+            <span class="px-2 py-0.5 rounded bg-slate-950 border border-slate-800">SaaS Security</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 border border-slate-800">Fintech Infrastructure</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 border border-slate-800">BAC / SSRF / IDOR</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 border border-slate-800">API Rate Limiting &amp; Defense</span>
+          </div>
+        </article>
+
+        <!-- Experience 2: Prime infoserv -->
+        <article class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 print-card space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 border-b border-slate-800/80 pb-3">
+            <div>
+              <h3 class="text-lg font-bold text-white">Security Analyst</h3>
+              <div class="text-sm font-semibold text-slate-300 font-mono mt-0.5">Prime infoserv LLP / LTD</div>
+            </div>
+            <div class="text-xs font-mono text-slate-400">
+              20th November 2023 – 31st April 2025
+            </div>
+          </div>
+
+          <ul class="space-y-2 text-sm text-slate-300 leading-relaxed list-disc list-outside pl-4 marker:text-emerald-500">
+            <li>
+              <strong>40+ High-Profile Client Audits:</strong> Performed full-cycle WAPT (audit &rarr; remediation &rarr; revalidation) across government, healthcare, financial, education, judiciary, and energy sectors, including ISRO, IIM Ahmedabad, AIIMS Raipur, Apollo Hospitals, Karnataka High Court, and IREDA.
+            </li>
+            <li>
+              <strong>Banking RCE Discovery:</strong> Led technical audits across 15+ in-house applications; detected and successfully demonstrated a critical Remote Code Execution (RCE) in a banking sector core application.
+            </li>
+            <li>
+              <strong>Operational Optimization:</strong> Redesigned technical reporting templates to streamline vulnerability reproduction and remediation advice, reducing overall auditing turnaround time while maintaining rigorous audit quality.
+            </li>
+            <li>
+              <strong>End-to-End Project Delivery:</strong> Led end-to-end project delivery, successfully taking over pending enterprise engagements and ensuring on-schedule delivery of all CERT-In compliance documentation.
+            </li>
+          </ul>
+
+          <div class="flex flex-wrap gap-1.5 pt-2 font-mono text-xs text-slate-400">
+            <span class="px-2 py-0.5 rounded bg-slate-950 border border-slate-800">CERT-In Compliance</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 border border-slate-800">Banking Core RCE</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 border border-slate-800">Public Sector &amp; Healthcare</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: EDUCATION & CERTIFICATIONS -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left: Certifications -->
+      <div id="certifications" class="lg:col-span-7 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div>
+            <div class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">Credentials</div>
+            <h2 class="text-xl font-bold text-white tracking-tight">Security Certifications</h2>
+          </div>
+        </div>
+
+        <div id="certCardsContainer" class="space-y-2.5">
+          <!-- Rendered dynamically by JavaScript with direct verification links -->
+        </div>
+      </div>
+
+      <!-- Right: Education -->
+      <div id="education" class="lg:col-span-5 space-y-4">
+        <div class="border-b border-slate-800 pb-2">
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">Academic Foundation</div>
+          <h2 class="text-xl font-bold text-white tracking-tight">Education</h2>
+        </div>
+
+        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-5 print-card space-y-3">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <div class="text-base font-bold text-white">Bachelor of Technology (B.Tech)</div>
+              <div class="text-xs font-mono text-slate-400 mt-0.5">Calcutta Institute of Engineering and Management (CIEM)</div>
+            </div>
+            <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono font-bold text-xs">
+              8.94 CGPA
+            </span>
+          </div>
+
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Rigorous grounding in Computer Science, Operating Systems, Networking Protocols, Cryptography, and Object-Oriented Software Design.
+          </p>
+
+          <div class="pt-3 border-t border-slate-800/80 font-mono text-[11px] text-slate-400 space-y-1">
+            <div class="text-slate-300 font-semibold">Core Focus Areas:</div>
+            <div>• Web &amp; Mobile App Security Testing</div>
+            <div>• Network Protocol Analysis &amp; Pivoting</div>
+            <div>• Reverse Engineering &amp; Android Decompilation</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SECTION 4: OPEN SOURCE & COMMUNITY CONTRIBUTIONS -->
+    <section id="opensource" class="space-y-4">
+      <div class="border-b border-slate-800 pb-2">
+        <div class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">Open Source Ecosystem</div>
+        <h2 class="text-xl font-bold text-white tracking-tight">Open Source &amp; Community Contributions</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+        
+        <!-- SecLists -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex flex-col justify-between print-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/25">Featured Contributor</span>
+              <i data-lucide="folder-git-2" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white">SecLists (Daniel Miessler)</h3>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+              Featured in the <strong>2024.4 final release</strong> for common wordlist dictionary contributions used across fuzzing and reconnaissance tooling worldwide.
+            </p>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-800/80 text-xs font-mono">
+            <a href="https://github.com/danielmiessler/SecLists/releases#release-2024.4" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 inline-flex items-center gap-1">
+              <span>View 2024.4 Release Note</span>
+              <i data-lucide="external-link" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- PortSwigger Bambdas -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex flex-col justify-between print-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/25">PortSwigger</span>
+              <i data-lucide="terminal" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white">PortSwigger Bambdas</h3>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+              Contributed custom Bambdas snippets for Burp Suite Pro, enabling custom HTTP request parsing and high-throughput traffic isolation.
+            </p>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-800/80 text-xs font-mono">
+            <a href="https://github.com/PortSwigger/bambdas/commits?author=ctflearner" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1">
+              <span>Author Commits</span>
+              <i data-lucide="external-link" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- OWASP Community -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex flex-col justify-between print-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-mono text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/25">OWASP Foundation</span>
+              <i data-lucide="globe" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white">OWASP Community</h3>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+              Authored documentation improvements and technical descriptions for the newly introduced community security tools repository.
+            </p>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-800/80 text-xs font-mono">
+            <a href="https://github.com/OWASP/www-community/commits?author=ctflearner" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 inline-flex items-center gap-1">
+              <span>Documentation Commits</span>
+              <i data-lucide="external-link" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- HackTricks Wiki -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex flex-col justify-between print-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/25">Offensive Wiki</span>
+              <i data-lucide="book-open" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white">HackTricks Wiki</h3>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+              Contributed documentation enhancements on Carlos Polop's HackTricks security reference, covering application vulnerability exploitation pathways.
+            </p>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-800/80 text-xs font-mono">
+            <a href="https://github.com/HackTricks-wiki/hacktricks/commits?author=ctflearner" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1">
+              <span>View GitHub Commits</span>
+              <i data-lucide="external-link" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Payatu -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex flex-col justify-between print-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-mono text-slate-300 bg-slate-800 px-2 py-0.5 rounded">Tooling Docs</span>
+              <i data-lucide="file-code" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white">Payatu Security</h3>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+              Refined installation procedures and setup documentation for open-source assessment utilities published by Payatu.
+            </p>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-800/80 text-xs font-mono text-emerald-400 flex items-center gap-1">
+            <i data-lucide="check" class="w-3.5 h-3.5"></i>
+            <span>Patch Documentation Merged</span>
+          </div>
+        </div>
+
+        <!-- Nuclei Templates -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex flex-col justify-between print-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/25">ProjectDiscovery</span>
+              <i data-lucide="binary" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white">Nuclei Vulnerability Signatures</h3>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+              Penned community YAML templates for emerging CVE detections and software fingerprinting across automated scanning workflows.
+            </p>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-800/80 text-xs font-mono">
+            <a href="https://github.com/projectdiscovery/nuclei-templates/commits?author=ctflearner" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 inline-flex items-center gap-1">
+              <span>View Nuclei Commits</span>
+              <i data-lucide="external-link" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: CONTACT & PROFESSIONAL CHANNELS (WITH LINKEDIN INTEGRATION) -->
+    <section id="contact" class="space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+        <div>
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">Get in Touch</div>
+          <h2 class="text-xl font-bold text-white tracking-tight">Contact &amp; Profiles</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+        
+        <!-- LinkedIn Primary Card -->
+        <div class="p-5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-[#0a66c2]/60 transition flex flex-col justify-between print-card space-y-3">
+          <div>
+            <div class="flex items-center justify-between text-xs font-mono mb-2">
+              <span class="px-2 py-0.5 rounded bg-[#0a66c2]/15 text-[#70b5f9] border border-[#0a66c2]/30 flex items-center gap-1">
+                <i data-lucide="linkedin" class="w-3 h-3"></i> Official Profile
+              </span>
+            </div>
+            <h3 class="text-base font-bold text-white">LinkedIn Network</h3>
+            <p id="contactLinkedInDisplay" class="text-xs text-slate-400 font-mono mt-1 break-all">
+              https://www.linkedin.com/in/affan-ahmed-70a406178/
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono">
+            <button onclick="copyToClipboard(contactData.linkedin, 'LinkedIn URL copied!')" class="text-slate-400 hover:text-white flex items-center gap-1">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy
+            </button>
+            <a id="contactCardLinkedInBtn" href="https://www.linkedin.com/in/affan-ahmed-70a406178/" target="_blank" rel="noopener noreferrer" 
+               class="text-[#70b5f9] hover:text-white font-semibold inline-flex items-center gap-1">
+              <span>Connect on LinkedIn</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Email Card -->
+        <div class="p-5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 transition flex flex-col justify-between print-card space-y-3">
+          <div>
+            <div class="flex items-center justify-between text-xs font-mono mb-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 flex items-center gap-1">
+                <i data-lucide="mail" class="w-3 h-3"></i> Direct Secure Mail
+              </span>
+              <span class="text-slate-500 text-[11px] font-mono">PGP / Plain</span>
+            </div>
+            <h3 class="text-base font-bold text-white">Email Address</h3>
+            <p id="contactEmailDisplay" class="text-xs text-slate-400 font-mono mt-1 break-all">
+              affanahmed3104@gmail.com
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono">
+            <button onclick="copyToClipboard(contactData.email, 'Email copied to clipboard!')" class="text-slate-400 hover:text-white flex items-center gap-1">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy
+            </button>
+            <a id="contactCardEmailBtn" href="mailto:affanahmed3104@gmail.com" class="text-emerald-400 hover:text-emerald-300 font-semibold inline-flex items-center gap-1">
+              <span>Send Message</span>
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Phone / Instant Reach Card -->
+        <div class="p-5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition flex flex-col justify-between print-card space-y-3">
+          <div>
+            <div class="flex items-center justify-between text-xs font-mono mb-2">
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1">
+                <i data-lucide="phone" class="w-3 h-3"></i> Direct Phone / Call
+              </span>
+              <span class="text-emerald-400 text-[11px] font-mono">Kolkata, IN</span>
+            </div>
+            <h3 class="text-base font-bold text-white">Telephone / WhatsApp</h3>
+            <p id="contactPhoneDisplay" class="text-xs text-slate-400 font-mono mt-1">
+              8583865960
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono">
+            <button onclick="copyToClipboard(contactData.phone, 'Phone number copied!')" class="text-slate-400 hover:text-white flex items-center gap-1">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy
+            </button>
+            <a id="contactCardPhoneBtn" href="tel:+918583865960" class="text-slate-300 hover:text-white font-semibold inline-flex items-center gap-1">
+              <span>Call / Reach</span>
+              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800/80 py-8 text-xs font-mono text-slate-500 no-print mt-16">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        © 2026 Affan (<span class="text-slate-400">@ctflearner</span>). All rights reserved.
+      </div>
+      <div class="flex items-center gap-4">
+        <a id="footerLinkedInLink" href="https://www.linkedin.com/in/affan-ahmed-70a406178/" target="_blank" rel="noopener noreferrer" class="hover:text-[#70b5f9] transition flex items-center gap-1">
+          <i data-lucide="linkedin" class="w-3 h-3 text-[#0a66c2]"></i> LinkedIn
+        </a>
+        <span>•</span>
+        <a href="https://github.com/ctflearner" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition">GitHub</a>
+        <span>•</span>
+        <a href="https://www.exploit-db.com/?author=11358" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition">Exploit-DB</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL: DOWNLOAD / EXPORT RESUME (PDF) -->
+  <div id="cvDownloadModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden no-print">
+    <div class="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-md overflow-hidden shadow-2xl">
+      <div class="px-5 py-3.5 bg-slate-850 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2 text-white font-mono text-sm font-semibold">
+          <i data-lucide="file-text" class="w-4 h-4 text-emerald-400"></i>
+          Download / Export CV &amp; Resume
+        </div>
+        <button onclick="closeCvModal()" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="p-5 space-y-4 font-mono text-xs text-slate-300">
+        <p class="text-slate-400 font-sans text-xs leading-relaxed">
+          Select an option below to obtain a verified copy of Affan's curriculum vitae.
+        </p>
+
+        <!-- Option 1: Direct Hosted PDF File Download -->
+        <div class="p-3.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-emerald-500/50 transition space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white text-xs flex items-center gap-1.5">
+              <i data-lucide="file-check" class="w-4 h-4 text-emerald-400"></i>
+              Official Hosted PDF Resume
+            </span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Recommended</span>
+          </div>
+          <p class="text-[11px] font-sans text-slate-400">
+            Download the pre-compiled, formatted PDF document with all verified CVE disclosures and credentials.
+          </p>
+          <a id="directPdfDownloadBtn" href="Affan_Ahmed_Resume.pdf" download="Affan_Ahmed_Resume.pdf" onclick="handleDirectPdfDownload(event)"
+             class="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Download Official PDF</span>
+          </a>
+        </div>
+
+        <!-- Option 2: Browser Print / Save as PDF -->
+        <div class="p-3.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 transition space-y-2">
+          <div class="font-bold text-white text-xs flex items-center gap-1.5">
+            <i data-lucide="printer" class="w-4 h-4 text-slate-400"></i>
+            Generate Live PDF from Page (Print)
+          </div>
+          <p class="text-[11px] font-sans text-slate-400">
+            Formats this exact live page into an executive single/multi-page print layout ready to "Save as PDF".
+          </p>
+          <button onclick="triggerPrintFromModal()" class="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 transition font-semibold">
+            <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+            <span>Open Print / PDF Dialog</span>
+          </button>
+        </div>
+
+        <!-- Option 3: Configure Custom Hosted Resume Link -->
+        <div class="pt-2 border-t border-slate-800 space-y-1.5">
+          <label class="block text-[10px] text-slate-400">Change Hosted Resume File URL (Google Drive / GitHub / CDN):</label>
+          <div class="flex items-center gap-2">
+            <input id="customResumeUrlInput" type="text" placeholder="https://your-domain.com/resume.pdf" 
+                   class="flex-1 bg-slate-950 border border-slate-800 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+            <button onclick="saveCustomResumeUrl()" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-xs text-slate-200">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none no-print">
+    <div class="bg-slate-900 border border-emerald-500/80 px-4 py-2.5 rounded-lg shadow-xl flex items-center gap-2.5 font-mono text-xs text-white">
+      <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+      <span id="toastMsg">Updated successfully</span>
+    </div>
+  </div>
+
+  <!-- APPLICATION SCRIPTS -->
+  <script>
+    // --- 0. CONTACT & LINKEDIN DATA STORE ---
+    const DEFAULT_CONTACT_DATA = {
+      linkedin: "https://www.linkedin.com/in/affan-ahmed-70a406178/",
+      email: "affanahmed3104@gmail.com",
+      phone: "8583865960",
+      resumePdfUrl: "Affan_Ahmed_Resume.pdf"
+    };
+
+    let contactData = JSON.parse(localStorage.getItem('affan_contact')) || DEFAULT_CONTACT_DATA;
+
+    function renderContactDetails() {
+      const navLnk = document.getElementById('navLinkedInLink');
+      const mobileLnk = document.getElementById('mobileLinkedInLink');
+      const sumLnk = document.getElementById('summaryLinkedInLink');
+      const footLnk = document.getElementById('footerLinkedInLink');
+      const sumEmail = document.getElementById('summaryEmailLink');
+      const sumEmailTxt = document.getElementById('summaryEmailText');
+
+      if (navLnk) navLnk.href = contactData.linkedin;
+      if (mobileLnk) mobileLnk.href = contactData.linkedin;
+      if (sumLnk) {
+        sumLnk.href = contactData.linkedin;
+      }
+      if (footLnk) footLnk.href = contactData.linkedin;
+      if (sumEmail) sumEmail.href = `mailto:${contactData.email}`;
+      if (sumEmailTxt) sumEmailTxt.textContent = contactData.email;
+
+      const dispLnk = document.getElementById('contactLinkedInDisplay');
+      const cardLnkBtn = document.getElementById('contactCardLinkedInBtn');
+      const dispEmail = document.getElementById('contactEmailDisplay');
+      const cardEmailBtn = document.getElementById('contactCardEmailBtn');
+      const dispPhone = document.getElementById('contactPhoneDisplay');
+      const cardPhoneBtn = document.getElementById('contactCardPhoneBtn');
+
+      if (dispLnk) dispLnk.textContent = contactData.linkedin;
+      if (cardLnkBtn) cardLnkBtn.href = contactData.linkedin;
+      if (dispEmail) dispEmail.textContent = contactData.email;
+      if (cardEmailBtn) cardEmailBtn.href = `mailto:${contactData.email}`;
+      if (dispPhone) dispPhone.textContent = contactData.phone;
+      if (cardPhoneBtn) cardPhoneBtn.href = `tel:${contactData.phone.replace(/[^0-9+]/g, '')}`;
+
+      const resumeInput = document.getElementById('customResumeUrlInput');
+      if (resumeInput) resumeInput.value = contactData.resumePdfUrl || '';
+    }
+
+    // --- CV DOWNLOAD / PRINT MODAL FUNCTIONS ---
+    function openCvModal() {
+      document.getElementById('customResumeUrlInput').value = contactData.resumePdfUrl || '';
+      document.getElementById('cvDownloadModal').classList.remove('hidden');
+    }
+
+    function closeCvModal() {
+      document.getElementById('cvDownloadModal').classList.add('hidden');
+    }
+
+    function handleDirectPdfDownload(e) {
+      const url = contactData.resumePdfUrl && contactData.resumePdfUrl.trim() !== ""
+        ? contactData.resumePdfUrl
+        : "Affan_ctflearner_Resume.pdf";
+      const btn = document.getElementById('directPdfDownloadBtn');
+      btn.href = url;
+      btn.download = "Affan_Ahmed_Resume.pdf";
+      closeCvModal();
+    }
+
+    function triggerPrintFromModal() {
+      closeCvModal();
+      setTimeout(() => {
+        window.print();
+      }, 200);
+    }
+
+    function saveCustomResumeUrl() {
+      const url = document.getElementById('customResumeUrlInput').value.trim();
+      contactData.resumePdfUrl = url;
+      localStorage.setItem('affan_contact', JSON.stringify(contactData));
+      showToast('Hosted resume link saved');
+    }
+
+    function copyToClipboard(text, successMsg) {
+      if (!text) return;
+      const el = document.createElement('textarea');
+      el.value = text;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      el.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg || 'Copied to clipboard!');
+      } catch (err) {
+        showToast('Unable to copy to clipboard.');
+      }
+      document.body.removeChild(el);
+    }
+
+    // --- 1. MASTER CVE DATA WITH SEVERITIES & GISTS (16 TOTAL: 10 WEB, 6 ANDROID) ---
+    const DEFAULT_CVE_DATA = [
+      { id: "CVE-2023-1362", type: "web", category: "Web Application", severity: "HIGH", cwe: "CWE-918", year: "2023", gist: "Server-Side Request Forgery (SSRF) allowing unauthenticated threat actors to forge backend requests and query internal loopback services.", url: "https://nvd.nist.gov/vuln/detail/cve-2023-1362" },
+      { id: "CVE-2023-0747", type: "web", category: "Web Application", severity: "HIGH", cwe: "CWE-22", year: "2023", gist: "Path Traversal vulnerability in file handling routine permitting arbitrary traversal across directories and unauthorized sensitive file leakage.", url: "https://nvd.nist.gov/vuln/detail/cve-2023-0747" },
+      { id: "CVE-2023-23937", type: "web", category: "Web Application", severity: "HIGH", cwe: "CWE-1284", year: "2023", gist: "Improper Validation of Specified Quantity in parameter handling causing state corruption, authorization bypass, and resource desynchronization.", url: "https://nvd.nist.gov/vuln/detail/cve-2023-23937" },
+      { id: "CVE-2023-0641", type: "web", category: "Web Application", severity: "MEDIUM", cwe: "CWE-79", year: "2023", gist: "Stored Cross-Site Scripting (XSS) via unescaped payload reflection, enabling arbitrary script execution within authenticated administrator sessions.", url: "https://nvd.nist.gov/vuln/detail/cve-2023-0641" },
+      { id: "CVE-2023-0571", type: "web", category: "Web Application", severity: "HIGH", cwe: "CWE-862", year: "2023", gist: "Broken Access Control (BAC) vulnerability facilitating horizontal privilege escalation and unauthorized access to peer user data schemas.", url: "https://nvd.nist.gov/vuln/detail/cve-2023-0571" },
+      { id: "CVE-2023-0562", type: "web", category: "Web Application", severity: "MEDIUM", cwe: "CWE-352", year: "2023", gist: "Cross-Site Request Forgery (CSRF) in critical state-changing settings, enabling unauthorized modification of account preferences.", url: "https://nvd.nist.gov/vuln/detail/cve-2023-0562" },
+      { id: "CVE-2023-0563", type: "web", category: "Web Application", severity: "HIGH", cwe: "CWE-89", year: "2023", gist: "SQL Injection vector in unsanitized parameter processing, permitting backend database enumeration and extraction of structured records.", url: "https://nvd.nist.gov/vuln/detail/cve-2023-0563" },
+      { id: "CVE-2023-0527", type: "web", category: "Web Application", severity: "MEDIUM", cwe: "CWE-200", year: "2023", gist: "Information Disclosure exposing internal system stack traces, architecture metadata, and cryptographic parameters to unauthenticated callers.", url: "https://nvd.nist.gov/vuln/detail/cve-2023-0527" },
+      { id: "CVE-2023-0455", type: "web", category: "Web Application", severity: "HIGH", cwe: "CWE-639", year: "2023", gist: "Insecure Direct Object Reference (IDOR) on management endpoints permitting unprivileged viewers to mutate critical resource identifiers.", url: "https://nvd.nist.gov/vuln/detail/cve-2023-0455" },
+      { id: "CVE-2023-3184", type: "web", category: "Web Application", severity: "CRITICAL", cwe: "CWE-287", year: "2023", gist: "Critical Authentication Bypass allowing remote attackers to circumvent credential verification workflows and establish administrative privileges.", url: "https://nvd.nist.gov/vuln/detail/cve-2023-3184" },
+      { id: "CVE-2024-2567", type: "android", category: "Android OS", severity: "HIGH", cwe: "CWE-926", year: "2024", gist: "Improper Export of Android Application Components (IPC), permitting co-located malicious apps on the OS to invoke protected broadcast handlers.", url: "https://nvd.nist.gov/vuln/detail/cve-2024-2567" },
+      { id: "CVE-2024-2364", type: "android", category: "Android OS", severity: "HIGH", cwe: "CWE-200", year: "2024", gist: "Information Exposure flaw in Android client logging and cache persistence, leaking session bearer tokens to world-readable local storage paths.", url: "https://nvd.nist.gov/vuln/detail/cve-2024-2364" },
+      { id: "CVE-2024-2365", type: "android", category: "Android OS", severity: "MEDIUM", cwe: "CWE-295", year: "2024", gist: "Improper Certificate Validation and flawed SSL pinning logic within native mobile libraries, exposing traffic to Man-in-the-Middle (MitM) inspection.", url: "https://nvd.nist.gov/vuln/detail/cve-2024-2365" },
+      { id: "CVE-2024-3430", type: "android", category: "Android OS", severity: "HIGH", cwe: "CWE-94", year: "2024", gist: "Code Injection vector through unvalidated custom URL scheme (Deep Link) dispatching arbitrary intent parameters directly into webview contexts.", url: "https://nvd.nist.gov/vuln/detail/cve-2024-3430" },
+      { id: "CVE-2024-3128", type: "android", category: "Android OS", severity: "MEDIUM", cwe: "CWE-280", year: "2024", gist: "Improper Handling of Insufficient Permissions during background service invocation, leading to intent redirection and local privilege escalations.", url: "https://nvd.nist.gov/vuln/detail/cve-2024-3128" },
+      { id: "CVE-2024-3124", type: "android", category: "Android OS", severity: "HIGH", cwe: "CWE-922", year: "2024", gist: "Insecure Storage of Sensitive Information in SharedPreferences and SQLite without hardware-backed Keystore encryption, allowing offline extraction.", url: "https://nvd.nist.gov/vuln/detail/cve-2024-3124" }
+    ];
+
+    let userCveData = JSON.parse(localStorage.getItem('affan_cves')) || DEFAULT_CVE_DATA;
+    let currentCVEType = 'all';
+    let cveSearchTerm = '';
+
+    function getSeverityClasses(severity) {
+      switch ((severity || '').toUpperCase()) {
+        case 'CRITICAL': return 'text-rose-400 bg-rose-500/10 border-rose-500/30';
+        case 'HIGH': return 'text-orange-400 bg-orange-500/10 border-orange-500/30';
+        case 'MEDIUM': return 'text-amber-400 bg-amber-500/10 border-amber-500/30';
+        default: return 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30';
+      }
+    }
+
+    function updateCveCounts() {
+      const total = userCveData.length;
+      const webCount = userCveData.filter(c => c.type === 'web').length;
+      const androidCount = userCveData.filter(c => c.type === 'android').length;
+
+      document.getElementById('cveBadgeTotal').textContent = `${total} Total`;
+      document.getElementById('cveStatCount').textContent = `${total}`;
+      document.getElementById('cveCountAll').textContent = `${total}`;
+      document.getElementById('cveCountWeb').textContent = `${webCount}`;
+      document.getElementById('cveCountAndroid').textContent = `${androidCount}`;
+    }
+
+    function renderCVEGrid() {
+      updateCveCounts();
+      const container = document.getElementById('cveDisplayGrid');
+      
+      const filtered = userCveData.filter(cve => {
+        const matchesType = (currentCVEType === 'all' || cve.type === currentCVEType);
+        const term = cveSearchTerm.toLowerCase();
+        const matchesSearch = cve.id.toLowerCase().includes(term) || 
+                              (cve.gist && cve.gist.toLowerCase().includes(term)) ||
+                              (cve.cwe && cve.cwe.toLowerCase().includes(term)) ||
+                              cve.category.toLowerCase().includes(term);
+        return matchesType && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-8 text-center text-xs font-mono text-slate-500">
+            No CVE records match your query or filter criteria.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(cve => {
+        const isWeb = cve.type === 'web';
+        const typeBadge = isWeb ? 'text-sky-400 bg-sky-500/10 border-sky-500/20' : 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20';
+        const sevClass = getSeverityClasses(cve.severity);
+
+        return `
+          <div class="p-4 rounded-xl bg-slate-950 border border-slate-800/90 hover:border-emerald-500/40 transition flex flex-col justify-between print-card space-y-3">
+            <div>
+              <div class="flex items-center justify-between gap-1 text-[10px] font-mono mb-1.5">
+                <span class="px-1.5 py-0.5 rounded border ${typeBadge}">${cve.category}</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-1.5 py-0.5 rounded border font-bold ${sevClass}">${cve.severity || 'HIGH'}</span>
+                  <span class="text-slate-500">${cve.year}</span>
+                </div>
+              </div>
+
+              <div class="font-mono font-bold text-white text-sm tracking-tight flex items-center justify-between">
+                <span>${cve.id}</span>
+                ${cve.cwe ? `<span class="text-[10px] text-slate-400 font-normal bg-slate-900 border border-slate-800 px-1.5 py-0.5 rounded">${cve.cwe}</span>` : ''}
+              </div>
+
+              <p class="text-xs text-slate-300 leading-relaxed mt-2 text-justify">
+                ${cve.gist || 'Vulnerability disclosure and technical impact assessment validated by NIST.'}
+              </p>
+            </div>
+
+            <div class="pt-2.5 border-t border-slate-800/60 flex items-center justify-between text-[11px] font-mono">
+              <span class="text-slate-500 text-[10px] flex items-center gap-1">
+                <i data-lucide="shield-check" class="w-3 h-3 text-emerald-400"></i> NIST Validated
+              </span>
+              <a href="${cve.url}" target="_blank" rel="noopener noreferrer" 
+                 class="text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1 font-semibold">
+                <span>NVD Advisory</span>
+                <i data-lucide="external-link" class="w-3 h-3"></i>
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function setCVEFilter(type) {
+      currentCVEType = type;
+      document.querySelectorAll('.cve-filter-btn').forEach(btn => {
+        btn.classList.remove('bg-emerald-500/20', 'text-emerald-300', 'font-medium');
+        btn.classList.add('text-slate-400');
+      });
+      const active = document.getElementById(`cve-tab-${type}`);
+      if (active) {
+        active.classList.add('bg-emerald-500/20', 'text-emerald-300', 'font-medium');
+        active.classList.remove('text-slate-400');
+      }
+      renderCVEGrid();
+    }
+
+    function filterCVEList() {
+      cveSearchTerm = document.getElementById('cveFilterInput').value.trim();
+      renderCVEGrid();
+    }
+
+    // --- 2. SECURITY CERTIFICATIONS ---
+    const DEFAULT_CERTS = [
+      {
+        id: "cap",
+        name: "CAP",
+        title: "Certified AppSec Practitioner",
+        issuer: "The SecOps Group",
+        link: "https://secops.group/",
+        credentialId: "6888356",
+        verified: true
+      },
+      {
+        id: "casa",
+        name: "CASA",
+        title: "Certified API Security Analyst (CASA)",
+        issuer: "API Sec University",
+        link: "https://www.credly.com/earner/earned/badge/26227657-8711-4936-8e00-f85e4f8efa9a",
+        verified: true
+      },
+      {
+        id: "cmpen",
+        name: "CMPEN-ANDROID",
+        title: "Certified Mobile Penetration Tester (Android)",
+        issuer: "SecOps Group",
+        link: "https://pentestingexams.com/certificate-validation/",
+        credentialId: "11719423",
+        verified: true
+      },
+      {
+        id: "crta",
+        name: "CRTA",
+        title: "Certified Red Team Analyst",
+        issuer: "CyberWarFare Labs",
+        link: "https://cyberwarfare.live/",
+        credentialId: "6a8019db0c2bad59228778c6",
+        verified: true
+      },
+      {
+        id: "pjpt",
+        name: "PJPT",
+        title: "Practical Junior Penetration Tester",
+        issuer: "TCM Security",
+        link: "https://certified.tcm-sec.com/bfcbe557-b3e9-49e5-b3b2-60c6a5252d0a?key=14dcd681d44266bd453d7a98939e796631cd427455b15bd61675788d3cfce78b#acc.vAOrju5x",
+        verified: true
+      },
+      {
+        id: "ewptx",
+        name: "eWPTX",
+        title: "Web Application Penetration Tester eXtreme (Pursuing)",
+        issuer: "INE Security",
+        link: "#",
+        verified: false
+      }
+    ];
+
+    let userCerts = JSON.parse(localStorage.getItem('affan_certs')) || DEFAULT_CERTS;
+
+    function renderCerts() {
+      const container = document.getElementById('certCardsContainer');
+      container.innerHTML = userCerts.map((cert, index) => {
+        return `
+          <div class="p-3.5 rounded-lg bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition flex items-center justify-between gap-3 print-card">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded bg-slate-950 border border-slate-800 flex items-center justify-center font-mono font-bold text-xs text-emerald-400">
+                0${index + 1}
+              </div>
+              <div>
+                <div class="font-mono font-bold text-white text-sm flex items-center gap-2">
+                  ${cert.name}
+                  <span class="text-[11px] font-sans font-normal text-slate-400">(${cert.title})</span>
+                </div>
+                <div class="text-xs text-emerald-400 font-mono mt-0.5">${cert.issuer}</div>
+                ${cert.credentialId ? `<div class="text-[10px] text-slate-500 font-mono mt-0.5">Credential ID: ${cert.credentialId}</div>` : ''}
+              </div>
+            </div>
+
+            <a href="${cert.link}" target="_blank" rel="noopener noreferrer" 
+               class="px-2.5 py-1 rounded bg-slate-950 border border-slate-800 hover:border-emerald-500/40 text-xs font-mono text-slate-300 hover:text-emerald-400 shrink-0 inline-flex items-center gap-1.5 transition">
+              <span>Verify Link</span>
+              <i data-lucide="external-link" class="w-3 h-3"></i>
+            </a>
+          </div>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    // --- 3. TOAST NOTIFICATION UTILITY ---
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3000);
+    }
+
+    // --- 4. MOBILE NAV TOGGLE ---
+    const mobileBtn = document.getElementById('mobileNavBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    mobileBtn.addEventListener('click', () => {
+      mobileNav.classList.toggle('hidden');
+    });
+    document.querySelectorAll('#mobileNav a').forEach(a => {
+      a.addEventListener('click', () => mobileNav.classList.add('hidden'));
+    });
+
+    // --- 5. INITIALIZATION ---
+    window.onload = function() {
+      renderContactDetails();
+      renderCVEGrid();
+      renderCerts();
+      lucide.createIcons();
+    };
+  </script>
+</body>
+</html>
